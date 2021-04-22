@@ -2,20 +2,19 @@ package ar.unrn.tp4.modelo;
 
 public class Email {
 
-	public String destinatarioEmail;
-	public String tituloEmail;
-	public String cuerpoEmail;
+	private String email;
 
-	public Email(String destinatarioEmail, String tituloEmail, String cuerpoEmail) {
-		this.destinatarioEmail = destinatarioEmail;
-		this.tituloEmail = tituloEmail;
-		this.cuerpoEmail = cuerpoEmail;
+	public Email(String email) throws CreateException {
+
+		if (email.contentEquals(""))
+			throw new CreateException("No se pudo agregar el Nombre");
+
+		this.email = email;
 	}
-	
-	public void enviar() throws SmtpException {
-		//conectar con el servidor SMTP para el envio
-		//Si algo sale mal, se lanza una SmtpException
-		//Si todo sale bien
-		//System.out.println("Se envió el email correctamente");}
+
+	public String email() {
+
+		return this.email;
 	}
+
 }

@@ -1,7 +1,6 @@
-package ar.unrn.tp4.modelo;
+package ar.unrn.tp4.libreria;
 
 public class SmtpException extends Exception {
-
 	/**
 	 * 
 	 */

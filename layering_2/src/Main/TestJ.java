@@ -1,6 +1,5 @@
 package Main;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -9,6 +8,7 @@ import java.time.LocalDate;
 import org.junit.Test;
 
 import ar.unrn.tp4.libreria.EnvioEmail;
+import ar.unrn.tp4.libreria.RepositorioDeEmails;
 import ar.unrn.tp4.modelo.Empleado;
 import ar.unrn.tp4.modelo.EnvioCorreoElectronico;
 import ar.unrn.tp4.modelo.PersistenciaEmpleados;
@@ -44,21 +44,17 @@ public class TestJ {
 
 	@Test
 
-	public void envioDeEmailTest() {
+	public void envioDeEmailTest() throws Exception {
 
-		EnvioCorreoElectronico envioEmail = new EnvioEmail();
-
-		assertDoesNotThrow(() -> envioEmail.enviar("Simon", "Aviso Final", "Ultimo aviso para retirar su tarjeta"));
-	}
-	
-	@Test 
-	
-	public void recuperarEmpleadosTest() {
-		
 		PersistenciaEmpleados persistencia = new EnMemoriaGuardarEmpleados();
-		
-		String empleados = persistencia.recuperarEmpleados();
-		
-		assertNotNull(empleados);
+		EnvioCorreoElectronico envio = new EnvioEmail(new RepositorioDeEmails());
+
+		Empleado empleado1 = new Empleado("Preuss", "Simon", LocalDate.of(1997, 04, 23), "simon@gmail");
+
+		persistencia.guardarEmpleado(empleado1);
+
+		envio.enviar("simon@gmail", "Feliz Cumple", "Hola, Feliz Cumple");
+
+		assertTrue(envio.verificarEnvioDeEmail("simon@gmail"));
 	}
 }

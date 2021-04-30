@@ -16,5 +16,4 @@ public class Email {
 
 		return this.email;
 	}
-
 }

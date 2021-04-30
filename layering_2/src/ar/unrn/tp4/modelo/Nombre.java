@@ -16,5 +16,4 @@ public class Nombre {
 
 		return this.nombre;
 	}
-
 }

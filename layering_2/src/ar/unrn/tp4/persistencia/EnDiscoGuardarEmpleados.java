@@ -1,26 +1,33 @@
 package ar.unrn.tp4.persistencia;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 
 import ar.unrn.tp4.modelo.Empleado;
 import ar.unrn.tp4.modelo.PersistenciaEmpleados;
 
 public class EnDiscoGuardarEmpleados implements PersistenciaEmpleados {
 
+	private String path;
+
+	public EnDiscoGuardarEmpleados(String path) {
+
+		this.path = path;
+	}
+
 	@Override
 	public void guardarEmpleado(Empleado e) {
 		// TODO Auto-generated method stub
 
-		String empleado = e.apellido() + "," + e.nombre() + "," + e.fechaNacimiento() + "," + e.email();
+		String empleado = e.apellido() + "," + e.nombre() + "," + e.fechaNacimiento() + "," + e.email() + "\n";
 
 		try {
 
-			Files.write(Paths.get("C:\\Users\\Simón\\Downloads\\UNRN\\Materias 3ro\\OO2\\archivo_prueba2.txt"), empleado.getBytes(),
-					StandardOpenOption.APPEND);
+			Files.write(Paths.get(this.path), empleado.getBytes(), StandardOpenOption.APPEND);
 
 		} catch (IOException ex) {
 
@@ -29,34 +36,39 @@ public class EnDiscoGuardarEmpleados implements PersistenciaEmpleados {
 	}
 
 	@Override
-	public String recuperarEmpleados() {
+	public List<Empleado> recuperarEmpleados() {
 		// TODO Auto-generated method stub
 
-		String contenido = "";
-		int c;
+		List<Empleado> empleados = new ArrayList<Empleado>();
 
 		try {
-			FileReader f = new FileReader("C:\\Users\\Simón\\Downloads\\UNRN\\Materias 3ro\\OO2\\archivo_prueba2.txt");
-			c = f.read();
 
-			while (c != -1) {
-				contenido += (char) c;
-				c = f.read();
+			List<String> lineas = Files.readAllLines(Paths.get(this.path));
+
+			for (String empleado : lineas) {
+
+				Empleado e;
+				try {
+					e = new Empleado(empleado);
+					empleados.add(e);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 		} catch (IOException ex) {
-			throw new RuntimeException("No se pudo Abrir...", ex);
+			throw new RuntimeException("No se pudo Abrir", ex);
 		}
 
-		return contenido;
+		return empleados;
 	}
 
 	@Override
 	public boolean existe(Empleado empleado) {
 
-		String empleados = recuperarEmpleados();
+		List<Empleado> empleados = recuperarEmpleados();
 
-		return empleados.contains(empleado.apellido() + "," + empleado.nombre() + "," + empleado.fechaNacimiento() + ","
-				+ empleado.email());
+		return empleados.contains(empleado);
 	}
 }

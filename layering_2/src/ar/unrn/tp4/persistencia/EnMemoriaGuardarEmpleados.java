@@ -1,6 +1,7 @@
 package ar.unrn.tp4.persistencia;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ar.unrn.tp4.modelo.Empleado;
 import ar.unrn.tp4.modelo.PersistenciaEmpleados;
@@ -16,21 +17,21 @@ public class EnMemoriaGuardarEmpleados implements PersistenciaEmpleados {
 	}
 
 	@Override
-	public String recuperarEmpleados() {
+	public List<Empleado> recuperarEmpleados() {
 		// TODO Auto-generated method stub
 
-		String contenido = "";
-	
+		List<Empleado> empleados = new ArrayList<Empleado>();
+
 		for (Empleado e : this.empleados) {
 
-			contenido+= e.toString();
+			empleados.add(e);
 		}
 
-		return contenido;
+		return empleados;
 	}
-	
+
 	public boolean existe(Empleado empleado) {
-		
+
 		return empleados.contains(empleado);
 	}
 }

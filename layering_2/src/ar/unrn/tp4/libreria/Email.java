@@ -12,6 +12,7 @@ public class Email {
 		this.cuerpoEmail = cuerpoEmail;
 	}
 
+	
 	public void enviar() throws SmtpException {
 		// conectar con el servidor SMTP para el envio
 		// Si algo sale mal, se lanza una SmtpException

@@ -27,6 +27,11 @@ public class Main {
 			Cumpleaños cum = new Cumpleaños(persistencia, envio);
 
 			cum.enviarEmailACumpleañeros();
+			
+			LocalDate hou = LocalDate.now();
+			
+			
+			System.out.println(hou.getDayOfWeek());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
